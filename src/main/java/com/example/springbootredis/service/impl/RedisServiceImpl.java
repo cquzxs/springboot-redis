@@ -3,12 +3,15 @@ package com.example.springbootredis.service.impl;
 import com.example.springbootredis.model.User;
 import com.example.springbootredis.service.IRedisService;
 import com.example.springbootredis.util.RedisUtil;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
 
 @Service
+@CacheConfig(cacheNames = "redis")
 public class RedisServiceImpl implements IRedisService {
 
     @Resource
@@ -63,4 +66,38 @@ public class RedisServiceImpl implements IRedisService {
         Set<Object> zSet = redisUtil.zGet("rank",0,100);
         System.out.println("rank:"+zSet);
     }
+
+    @Cacheable(key = "'token'")
+    @Override
+    public String cacheString() {
+        return "zxs";
+    }
+
+    @Cacheable(key = "'userInfo'")
+    @Override
+    public User cacheObject() {
+        return new User("张三","123");
+    }
+
+    @Cacheable(key = "'userList'")
+    @Override
+    public List<User> cacheList() {
+        List<User> list = new ArrayList<>();
+        list.add(new User("张三","123"));
+        list.add(new User("李四","123"));
+        return list;
+    }
+
+    @Cacheable(key = "'cacheInteger'")
+    @Override
+    public Integer cacheInteger() {
+        return 1;
+    }
+
+    @Cacheable(key = "'cacheLong'")
+    @Override
+    public Long cacheLong() {
+        return 1L;
+    }
+
 }
