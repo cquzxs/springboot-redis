@@ -19,7 +19,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 
-@Configuration
+/**
+ * 所有的key共用一个过期时间
+ */
+//@Configuration
 public class RedisConfig {
     @Bean
     @SuppressWarnings("all")
