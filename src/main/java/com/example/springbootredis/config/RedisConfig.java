@@ -19,7 +19,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 
+
 /**
+ * @author: xueshan.zeng
+ * @date: 2019/8/7
  * 所有的key共用一个过期时间
  */
 //@Configuration
@@ -53,10 +56,14 @@ public class RedisConfig {
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory){
         //缓存配置对象
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofDays(1L)) //设置缓存的默认超时时间：1天
-                .disableCachingNullValues()             //如果是空值，不缓存
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))     //设置key序列化器
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer((new GenericJackson2JsonRedisSerializer())));  //设置value序列化器
+                //设置缓存的默认超时时间：1天
+                .entryTtl(Duration.ofDays(1L))
+                //如果是空值，不缓存
+                .disableCachingNullValues()
+                //设置key序列化器
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                //设置value序列化器
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer((new GenericJackson2JsonRedisSerializer())));
 
         return RedisCacheManager.builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
                 .cacheDefaults(redisCacheConfiguration).build();

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
-
+/**
+ * @author: xueshan.zeng
+ * @date: 2019/8/7
+ */
 @Service
 @CacheConfig(cacheNames = "redis")
 public class RedisServiceImpl implements IRedisService {
@@ -23,7 +26,7 @@ public class RedisServiceImpl implements IRedisService {
         //字符串
         redisUtil.set("token","zxs",1800);
         //Hash
-        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>(16);
         map.put("username","张三");
         map.put("password","123");
         redisUtil.hSet("userInfo",map,1800);

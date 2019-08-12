@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * @author: xueshan.zeng
+ * @date: 2019/8/7
  * 不同的key采用不同的过期时间
  */
 @Configuration
@@ -45,15 +47,17 @@ public class RedisCacheConfig {
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         return new RedisCacheManager(
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
-                this.getRedisCacheConfigurationWithTtl(600), // 默认策略，未配置的 key 会使用这个
-                this.getRedisCacheConfigurationMap() // 指定 key 策略
+                // 默认策略，未配置的 key 会使用这个
+                this.getRedisCacheConfigurationWithTtl(600),
+                // 指定 key 策略
+                this.getRedisCacheConfigurationMap()
         );
     }
 
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
-        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
-        redisCacheConfigurationMap.put("redis", this.getRedisCacheConfigurationWithTtl(3000));//填入@cacheable注解的cacheNames或者value的值
-        //redisCacheConfigurationMap.put("test", this.getRedisCacheConfigurationWithTtl(18000));
+        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(16);
+        //填入@cacheable注解的cacheNames或者value的值
+        redisCacheConfigurationMap.put("redis", this.getRedisCacheConfigurationWithTtl(3000));
 
         return redisCacheConfigurationMap;
     }

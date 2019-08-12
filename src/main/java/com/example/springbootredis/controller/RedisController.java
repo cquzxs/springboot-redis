@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
-
+/**
+ * @author: xueshan.zeng
+ * @date: 2019/8/7
+ */
 @RestController
 public class RedisController {
     @Resource
@@ -35,8 +38,8 @@ public class RedisController {
         System.out.println("userList:"+list);
         Integer i = redisService.cacheInteger();
         System.out.println("integer:"+i);
-        //Long l = redisService.cacheLong(); //报类型转换的错
-        //System.out.println("long:"+l);
+        /*Long l = redisService.cacheLong(); //报类型转换的错
+        System.out.println("long:"+l);*/
         return "ok";
     }
 }

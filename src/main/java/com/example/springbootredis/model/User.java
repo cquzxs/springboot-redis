@@ -1,7 +1,10 @@
 package com.example.springbootredis.model;
 
 import java.io.Serializable;
-
+/**
+ * @author: xueshan.zeng
+ * @date: 2019/8/7
+ */
 public class User implements Serializable {
     private static final long serialVersionUID = 4639927280734526763L;
     private String username;

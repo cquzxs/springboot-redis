@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * @author: xueshan.zeng
+ * @date: 2019/8/7
+ */
 @Component
 public class RedisUtil {
 
@@ -175,7 +178,7 @@ public class RedisUtil {
      * @return 对应的多个键值
      */
     public Map<String, Object> hGet(String key) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         Map<Object, Object> temp = redisTemplate.opsForHash().entries(key);
         for (Map.Entry<Object, Object> entry:temp.entrySet()) {
             map.put(entry.getKey().toString(),entry.getValue());
@@ -365,8 +368,9 @@ public class RedisUtil {
     public long sSetAndTime(String key, long time, Object... values) {
         try {
             Long count = redisTemplate.opsForSet().add(key, values);
-            if (time > 0)
+            if (time > 0){
                 expire(key, time);
+            }
             return count;
         } catch (Exception e) {
             e.printStackTrace();
@@ -483,8 +487,9 @@ public class RedisUtil {
     public boolean lSet(String key, Object value, long time) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
-            if (time > 0)
+            if (time > 0){
                 expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -520,8 +525,9 @@ public class RedisUtil {
     public boolean lSet(String key, List<Object> value, long time) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
-            if (time > 0)
+            if (time > 0){
                 expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
